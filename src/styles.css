@@ -28,18 +28,25 @@ body {
     grid-template-columns: 1fr 2fr;
     margin: 100px;
 }
-.plusPic {
-    height: 30px;
-    width: 30px;
-    margin-top: 4px;
+.left {
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
 }
-.left { 
+.right {
+    border: 2px solid black;
+}
+.projectHeader { 
     display: flex;
     justify-content: center;
     align-items: center;
     gap:10px;
-    border-right: 2px solid black;
+    margin-bottom: 20px;
 }
-.right {
+.plusPic {
+    height: 30px;
+    width: 30px;
+    margin-top: 4px;
 }
 

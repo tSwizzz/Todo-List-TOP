@@ -1,6 +1,6 @@
 import './styles.css';
 import todoIcon from './images/todo-logo.png';
-
+import {generateProjectList} from './modules/projectList';
 //generates header logo and title and appends them
 const headerContainer = document.getElementById("headerContainer");
 
@@ -14,7 +14,6 @@ headerTitle.textContent = "To-do List";
 
 headerContainer.append(todoLogo, headerTitle);
 
-//
-const projectList = document.querySelector("projectList");
-
-
+//event listener for adding new projects
+const addProjectBtn = document.getElementById("addProjectBtn");
+    addProjectBtn.addEventListener('click', generateProjectList);

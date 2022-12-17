@@ -1,6 +1,8 @@
 import './styles.css';
 import todoIcon from './images/todo-logo.png';
-import {generateProjectList} from './modules/projectList';
+import {generateProjectInfo} from './modules/projectList';
+let modalDisplayed = false;
+
 //generates header logo and title and appends them
 const headerContainer = document.getElementById("headerContainer");
 
@@ -16,4 +18,17 @@ headerContainer.append(todoLogo, headerTitle);
 
 //event listener for adding new projects
 const addProjectBtn = document.getElementById("addProjectBtn");
-    addProjectBtn.addEventListener('click', generateProjectList);
+    addProjectBtn.addEventListener('click', projectButton);
+
+
+function projectButton() {
+    if(modalDisplayed) 
+        return;
+    else {
+        generateProjectInfo();
+        return modalDisplayed = true;
+    }
+}
+
+
+

@@ -1,6 +1,6 @@
 import {generateDisplayTitle} from "./projectDisplay";
-
 const myProjects = []; //keeps track of all new projects added
+let modalContainer;
 
 class Project {
     constructor(title, description, dueDate) {
@@ -13,16 +13,24 @@ class Project {
     }
 }
 
+function newProjectList() { //continue from here
+    modalContainer.style.display = "none";
+}
+
+function exitModal() {
+    modalContainer.style.display = "none";
+}
+
 export function generateProjectInfo() { //opens a popup menu to input task details
-    const modalContainer = document.querySelector(".modalContainer");
+    modalContainer = document.querySelector(".modalContainer");
 
     const modalCard = document.createElement('div');
     modalCard.className = "modalCard";
     modalContainer.appendChild(modalCard);
 
-    const modal = document.createElement('div');
-    modal.className = "modal";
-    modalContainer.appendChild(modal);
+    //const modal = document.createElement('div');
+    //modal.className = "modal";
+    //modalContainer.appendChild(modal);
 
     const header = document.createElement('h3');
     header.className = "header";
@@ -38,5 +46,21 @@ export function generateProjectInfo() { //opens a popup menu to input task detai
     description.className = 'description';
     description.placeholder = "Description: (go jogging, cook, etc)";
 
-    modalCard.append(header, title, description);
+    const addTaskButton = document.createElement('button');
+    addTaskButton.className = "addTaskButton";
+    addTaskButton.textContent = "Add";
+
+    const delTaskButton = document.createElement('button');
+    delTaskButton.className = "delTaskButton";
+    delTaskButton.textContent = "Delete";
+
+    modalCard.append(header, title, description, addTaskButton, delTaskButton);
+
+    addTaskButton.addEventListener('click', function createTask() {
+        let newProject = new Project(title.value, description.value);
+        newProject.addProjectToLibrary();
+        newProjectList();
+    });
+
+    delTaskButton.addEventListener('click', exitModal);
 }

@@ -1,7 +1,7 @@
 import './styles.css';
 import todoIcon from './images/todo-logo.png';
 import {generateProjectInfo} from './modules/projectList';
-let modalDisplayed = false;
+export let modalDisplayed = false;
 
 //generates header logo and title and appends them
 const headerContainer = document.getElementById("headerContainer");
@@ -25,10 +25,7 @@ function projectButton() {
     if(modalDisplayed) 
         return;
     else {
-        generateProjectInfo();
-        return modalDisplayed = true;
+        generateProjectInfo(); //inside projectList.js
+        modalDisplayed = true;
     }
 }
-
-
-

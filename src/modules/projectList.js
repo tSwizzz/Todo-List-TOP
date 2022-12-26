@@ -1,8 +1,13 @@
 import {generateDisplayTitle} from "./projectDisplay";
-const myProjects = []; //keeps track of all new projects added
+export const myProjects = []; //keeps track of all new projects added
+export let addTaskButton = document.createElement('button');
+export let delTaskButton = document.createElement('button');
+export const title = document.createElement('input');
+export const description = document.createElement('input');
+
 let modalContainer;
 
-class Project {
+export class Project {
     constructor(title, description, dueDate) {
         this.title = title;
         this.description = description;
@@ -13,12 +18,17 @@ class Project {
     }
 }
 
-function newProjectList() { //continue from here
-    modalContainer.style.display = "none";
+export function newProjectList() {
+    while (modalContainer.firstChild) {
+        modalContainer.removeChild(modalContainer.firstChild);
+      }
+    
 }
 
-function exitModal() {
-    modalContainer.style.display = "none";
+export function exitModal() {
+    while (modalContainer.firstChild) {
+        modalContainer.removeChild(modalContainer.firstChild);
+      }
 }
 
 export function generateProjectInfo() { //opens a popup menu to input task details
@@ -36,31 +46,20 @@ export function generateProjectInfo() { //opens a popup menu to input task detai
     header.className = "header";
     header.textContent = "Enter Task Details Here!";
 
-    const title = document.createElement('input');
     title.type = "text";
     title.className = 'title';
     title.placeholder = "Task title";
 
-    const description = document.createElement('input');
     description.type = "text";
     description.className = 'description';
     description.placeholder = "Description: (go jogging, cook, etc)";
 
-    const addTaskButton = document.createElement('button');
     addTaskButton.className = "addTaskButton";
     addTaskButton.textContent = "Add";
 
-    const delTaskButton = document.createElement('button');
     delTaskButton.className = "delTaskButton";
     delTaskButton.textContent = "Delete";
 
     modalCard.append(header, title, description, addTaskButton, delTaskButton);
 
-    addTaskButton.addEventListener('click', function createTask() {
-        let newProject = new Project(title.value, description.value);
-        newProject.addProjectToLibrary();
-        newProjectList();
-    });
-
-    delTaskButton.addEventListener('click', exitModal);
 }

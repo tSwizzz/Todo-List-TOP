@@ -1,7 +1,7 @@
 import './styles.css';
 import todoIcon from './images/todo-logo.png';
-import {generateProjectInfo} from './modules/projectList';
-export let modalDisplayed = false;
+import {generateProjectInfo, exitModal, newProjectList, Project, myProjects, addTaskButton, delTaskButton, title, description, showModal} from './modules/projectList';
+let modalDisplayed = false;
 
 //generates header logo and title and appends them
 const headerContainer = document.getElementById("headerContainer");
@@ -20,12 +20,24 @@ headerContainer.append(todoLogo, headerTitle);
 const addProjectBtn = document.getElementById("addProjectBtn");
     addProjectBtn.addEventListener('click', projectButton);
 
+addTaskButton.addEventListener('click', function createTask() {
+    let newProject = new Project(title.value, description.value);
+    newProject.addProjectToLibrary();
+    newProjectList();
+    modalDisplayed = false;
+});
+
+delTaskButton.addEventListener('click', () => {
+    exitModal();
+    modalDisplayed = false;
+});
+
 
 function projectButton() {
     if(modalDisplayed) 
         return;
     else {
         generateProjectInfo(); //inside projectList.js
-        modalDisplayed = true;
+        return modalDisplayed = true;
     }
 }

@@ -1,43 +1,37 @@
 import './styles.css';
-import todoIcon from './images/todo-logo.png';
-import {generateProjectInfo, exitModal, newProjectList, Project, myProjects, addTaskButton, delTaskButton, title, description, showModal} from './modules/projectList';
+import header from './modules/websiteHeader';
+import { generateDisplayTitle } from './modules/projectDisplay';
+import {modalContainer, generateProjectInfo, newProjectList, Project, myProjects, projPosInArray, addTaskButton, delTaskButton, title, description, showModal, numOfProjects} from './modules/projectList';
 let modalDisplayed = false;
 
-//generates header logo and title and appends them
-const headerContainer = document.getElementById("headerContainer");
-
-const todoLogo = new Image();
-todoLogo.src = todoIcon;
-todoLogo.classList.add("todoLogo");
-
-const headerTitle = document.createElement('h1');
-headerTitle.classList.add("headerTitle");
-headerTitle.textContent = "To-do List";
-
-headerContainer.append(todoLogo, headerTitle);
+header(); //displays website header; inside websiteHeader.js
+generateDisplayTitle();
 
 //event listener for adding new projects
 const addProjectBtn = document.getElementById("addProjectBtn");
-    addProjectBtn.addEventListener('click', projectButton);
+    addProjectBtn.addEventListener('click', () => {
+        if(modalDisplayed) 
+            return;
+        else {
+            generateProjectInfo();
+            modalDisplayed = true;
+        }
+    });
 
-addTaskButton.addEventListener('click', function createTask() {
+//sends project info to array and displays the info on screen
+addTaskButton.addEventListener('click', function createProject() {
     let newProject = new Project(title.value, description.value);
     newProject.addProjectToLibrary();
     newProjectList();
+    generateDisplayTitle();
     modalDisplayed = false;
 });
 
+//exits modal that asks for project info
 delTaskButton.addEventListener('click', () => {
-    exitModal();
+    while (modalContainer.firstChild) {
+        modalContainer.removeChild(modalContainer.firstChild);
+    }
     modalDisplayed = false;
 });
 
-
-function projectButton() {
-    if(modalDisplayed) 
-        return;
-    else {
-        generateProjectInfo(); //inside projectList.js
-        return modalDisplayed = true;
-    }
-}

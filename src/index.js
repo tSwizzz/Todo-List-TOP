@@ -1,7 +1,7 @@
 import './styles.css';
 import header from './modules/websiteHeader';
 import { generateDisplayTitle } from './modules/projectDisplay';
-import {modalContainer, generateProjectInfo, newProjectList, Project, myProjects, projPosInArray, addTaskButton, delTaskButton, title, description, showModal, numOfProjects} from './modules/projectList';
+import {modalContainer, generateProjectInfo, newProjectList, Project, myProjects, projPosInArray, addTaskButton, delTaskButton, title, description, showModal, numOfProjects, createTask} from './modules/projectList';
 let modalDisplayed = false;
 
 header(); //displays website header; inside websiteHeader.js
@@ -19,9 +19,8 @@ const addProjectBtn = document.getElementById("addProjectBtn");
     });
 
 //sends project info to array and displays the info on screen
-addTaskButton.addEventListener('click', function createProject() {
-    let newProject = new Project(title.value, description.value);
-    newProject.addProjectToLibrary();
+addTaskButton.addEventListener('click', () => {
+    createTask();
     newProjectList();
     generateDisplayTitle();
     modalDisplayed = false;

@@ -1,3 +1,5 @@
+import { generateDisplayTitle } from "./projectDisplay";
+
 export const myProjects = []; //keeps track of all new projects added
 export let addTaskButton = document.createElement('button');
 export let delTaskButton = document.createElement('button');
@@ -5,12 +7,13 @@ export const title = document.createElement('input');
 export const description = document.createElement('input');
 export let modalContainer;
 export let numOfProjects = 0;
-let projectDeleteBtn;
+let index = 0;
 
 export class Project {
-    constructor(title, description) {
+    constructor(title, description, index) {
         this.title = title;
         this.description = description;
+        this.index = index;
         this.addProjectToLibrary = function() {
             myProjects.push(this);
         }
@@ -18,6 +21,7 @@ export class Project {
 }
 
 //displays the project name and option to delete under "Projects"
+//also removes the project from the array
 export function newProjectList() {
     while (modalContainer.firstChild) {
         modalContainer.removeChild(modalContainer.firstChild);
@@ -33,19 +37,33 @@ export function newProjectList() {
         project.className = "project";
         project.textContent = myProjects[numOfProjects].title;
 
-        projectDeleteBtn = document.createElement('button');
+        let projectDeleteBtn = document.createElement('button');
         projectDeleteBtn.className = "projectDeleteBtn";
         projectDeleteBtn.textContent = "Delete";
-        
+
+        let indexNum = myProjects[k].index;//i figured this out somehow
+        myProjects[k].index = projectDeleteBtn;//i figured this out somehow
+
         projectContainer.append(project, projectDeleteBtn);
         projectList.appendChild(projectContainer);
         numOfProjects++;
+        console.log(myProjects);
         
-
         projectDeleteBtn.addEventListener('click', () => {
             projectContainer.remove();
+            myProjects.splice(myProjects.indexOf(myProjects[indexNum]), 1);//i figured this out somehow
+            numOfProjects--;//i figured this out somehow
+            generateDisplayTitle();
+            console.log(myProjects);
         });
     }
+    
+}
+
+export function createTask() {
+    let newProject = new Project(title.value, description.value, index);
+    newProject.addProjectToLibrary();
+    index++;
 }
 
 //opens a popup menu to input task details

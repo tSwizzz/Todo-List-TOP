@@ -1,6 +1,5 @@
 import { generateDisplayTitle } from "./projectDisplay";
-
-export const myProjects = []; //keeps track of all new projects added
+export const myProjects = [];
 export let addTaskButton = document.createElement('button');
 export let delTaskButton = document.createElement('button');
 export const title = document.createElement('input');
@@ -20,13 +19,15 @@ export class Project {
     }
 }
 
+export function createTask() {
+    let newProject = new Project(title.value, description.value, index);
+    newProject.addProjectToLibrary();
+    index++;
+}
+
 //displays the project name and option to delete under "Projects"
 //also removes the project from the array
 export function newProjectList() {
-    while (modalContainer.firstChild) {
-        modalContainer.removeChild(modalContainer.firstChild);
-    }
-    
     for(let k = numOfProjects; k < myProjects.length; k++) {
         const projectList = document.querySelector(".projectList");
 
@@ -41,29 +42,24 @@ export function newProjectList() {
         projectDeleteBtn.className = "projectDeleteBtn";
         projectDeleteBtn.textContent = "Delete";
 
-        let indexNum = myProjects[k].index;//i figured this out somehow
-        myProjects[k].index = projectDeleteBtn;//i figured this out somehow
+        let indexNum = myProjects[k].index;
 
         projectContainer.append(project, projectDeleteBtn);
         projectList.appendChild(projectContainer);
         numOfProjects++;
-        console.log(myProjects);
+        console.log(myProjects);//delete later
         
         projectDeleteBtn.addEventListener('click', () => {
             projectContainer.remove();
-            myProjects.splice(myProjects.indexOf(myProjects[indexNum]), 1);//i figured this out somehow
-            numOfProjects--;//i figured this out somehow
+            myProjects.splice(myProjects.indexOf(myProjects[indexNum]), 1);
+            numOfProjects--;
             generateDisplayTitle();
-            console.log(myProjects);
-        });
-    }
-    
-}
 
-export function createTask() {
-    let newProject = new Project(title.value, description.value, index);
-    newProject.addProjectToLibrary();
-    index++;
+            index--;
+            console.log(myProjects);
+            return {myProjects, index};
+        });
+    }  
 }
 
 //opens a popup menu to input task details
@@ -84,7 +80,7 @@ export function generateProjectInfo() {
 
     description.type = "text";
     description.className = 'description';
-    description.placeholder = "Description: (go jogging, cook, etc)";
+    description.placeholder = "Description: (Go jogging, Cook, etc)";
 
     addTaskButton.className = "addTaskButton";
     addTaskButton.textContent = "Add";
@@ -94,4 +90,6 @@ export function generateProjectInfo() {
 
     modalCard.append(header, title, description, addTaskButton, delTaskButton);
 }
+
+
 

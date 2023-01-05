@@ -8,7 +8,7 @@ projectDisplayHeader.appendChild(projectDisplayTitle);
 
 export function generateDisplayTitle() {
     if(myProjects.length >=1)
-        projectDisplayTitle.textContent = "Current Project: " + myProjects[numOfProjects - 1].title;
+        projectDisplayTitle.textContent = "Current Project: fix this later lol";
     else {
         projectDisplayTitle.textContent = "Your projects display here!";
     }

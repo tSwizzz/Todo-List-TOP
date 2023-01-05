@@ -4,10 +4,17 @@ import { generateDisplayTitle } from './modules/projectDisplay';
 import {modalContainer, generateProjectInfo, newProjectList, Project, myProjects, projPosInArray, addTaskButton, delTaskButton, title, description, showModal, numOfProjects, createTask} from './modules/projectList';
 let modalDisplayed = false;
 
-header(); //displays website header; inside websiteHeader.js
+header(); //displays website header;
 generateDisplayTitle();
 
-//event listener for adding new projects
+function exitModal() {
+    while (modalContainer.firstChild) {
+        modalContainer.removeChild(modalContainer.firstChild);
+    }
+    modalDisplayed = false;
+}
+
+//displays modal for adding info to new project
 const addProjectBtn = document.getElementById("addProjectBtn");
     addProjectBtn.addEventListener('click', () => {
         if(modalDisplayed) 
@@ -18,19 +25,16 @@ const addProjectBtn = document.getElementById("addProjectBtn");
         }
     });
 
-//sends project info to array and displays the info on screen
+//after adding info to new project via "addProjectBtn", this will
+//send the project info to the array and display the info on screen
 addTaskButton.addEventListener('click', () => {
+    exitModal();
     createTask();
     newProjectList();
     generateDisplayTitle();
     modalDisplayed = false;
 });
 
-//exits modal that asks for project info
-delTaskButton.addEventListener('click', () => {
-    while (modalContainer.firstChild) {
-        modalContainer.removeChild(modalContainer.firstChild);
-    }
-    modalDisplayed = false;
-});
+//strictly exits modal
+delTaskButton.addEventListener('click', exitModal);
 

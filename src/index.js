@@ -1,11 +1,9 @@
 import './styles.css';
 import header from './modules/websiteHeader';
-import { generateDisplayTitle } from './modules/projectDisplay';
-import {modalContainer, generateProjectInfo, newProjectList, Project, myProjects, projPosInArray, addTaskButton, delTaskButton, title, description, showModal, numOfProjects, createTask} from './modules/projectList';
+import {modalContainer, generateProjectInfo, newProjectList, myProjects, addTaskButton, delTaskButton, title, description, showModal, numOfProjects, createTask} from './modules/projectList';
+import { projectDisplay } from './modules/projectDisplay';
 let modalDisplayed = false;
-
-header(); //displays website header;
-generateDisplayTitle();
+header();
 
 function exitModal() {
     while (modalContainer.firstChild) {
@@ -17,9 +15,9 @@ function exitModal() {
 //displays modal for adding info to new project
 const addProjectBtn = document.getElementById("addProjectBtn");
     addProjectBtn.addEventListener('click', () => {
-        if(modalDisplayed) 
+        if(modalDisplayed) {
             return;
-        else {
+        } else {
             generateProjectInfo();
             modalDisplayed = true;
         }
@@ -29,9 +27,10 @@ const addProjectBtn = document.getElementById("addProjectBtn");
 //send the project info to the array and display the info on screen
 addTaskButton.addEventListener('click', () => {
     exitModal();
-    createTask();
-    newProjectList();
-    generateDisplayTitle();
+    createTask();//push task into array
+    for (let k = numOfProjects; k < myProjects.length; k++) {
+        newProjectList(myProjects[k]);
+    }
     modalDisplayed = false;
 });
 
